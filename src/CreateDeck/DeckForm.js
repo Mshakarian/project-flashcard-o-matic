@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 export default function DeckForm({ deck, deckFunction }) {
@@ -14,7 +14,13 @@ export default function DeckForm({ deck, deckFunction }) {
   };
 
   //set new blank deck state
-  const [newDeck, setNewDeck] = useState(deck);
+  const initialDeck = deck
+  const [newDeck, setNewDeck] = useState(initialDeck);
+  useEffect(() => {
+    const abortController = new AbortController();
+    setNewDeck(initialDeck);
+    return abortController.abort()
+  }, [initialDeck]);
 
   //change handler
   const changeHandler = ({ target }) => {
@@ -30,8 +36,8 @@ export default function DeckForm({ deck, deckFunction }) {
 
     //use function passed from page
     const submittedDeck = deckFunction(newDeck, abortController.signal);
-    setNewDeck(deck);
-    history.push(`/decks/${submittedDeck.id}/`);
+    setNewDeck(submittedDeck);
+    history.push(`/decks/${newDeck.id}/`);
 
     //Abort controller
     return () => abortController.abort();
@@ -39,26 +45,26 @@ export default function DeckForm({ deck, deckFunction }) {
 
   return (
     <React.Fragment>
-      <form onSubmit={() => submitHandler(newDeck)}>
+      <form>
         <label htmlFor="name">Name:</label>
         <br />
         <input
           id="name"
-          name={deck.name}
+          name="name"
           type="text"
           onChange={changeHandler}
-          value={deck.name}
-          placeholder={deck.name}
+          value={newDeck.name}
+          placeholder={newDeck.name}
         />
         <br />
         <label htmlFor="description">Description:</label>
         <br />
         <textarea
           id="description"
-          name={deck.description}
+          name="description"
           onChange={changeHandler}
-          value={deck.description}
-          placeholder={deck.description}
+          value={newDeck.description}
+          placeholder={newDeck.description}
           rows={8}
           cols={45}
         />
@@ -67,6 +73,7 @@ export default function DeckForm({ deck, deckFunction }) {
           type="submit"
           style={formButtonStyle}
           className="d-block btn btn-success"
+          onSubmit={submitHandler}
         >
           Submit
         </button>

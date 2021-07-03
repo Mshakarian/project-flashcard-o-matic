@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 export default function NewCardForm({ deckId, card, cardFunction }) {
@@ -6,24 +6,27 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
 
   //Get history for use later
   const history = useHistory();
-
-  //Set card state
   const initialCard = card;
-  const [newCard, setNewCard] = useState(initialCard);
-
+ const [newCard, setNewCard] = useState(initialCard);
+  //Set card state
+  useEffect(() => {
+    const abortController = new AbortController();
+    setNewCard(initialCard);
+    return abortController.abort()
+  }, [initialCard]);
   //change handler
   const changeHandler = ({ target }) => {
     setNewCard({ ...newCard, [target.name]: target.value });
   };
 
   //submit handler
-  async function submitHandler(event, newCard, deckId) {
+  function submitHandler(event, newCard, deckId) {
     event.preventDefault();
     //Abort Controller for deckFunction API call
     const abortController = new AbortController();
 
     //use function passed from page
-    const submittedCard = await cardFunction(
+    const submittedCard = cardFunction(
       deckId,
       newCard,
       abortController.signal
