@@ -10,6 +10,7 @@ export default function DeckView({ decks }) {
   async function deleteHandler(deck) {
     //Abort controller for deleteDeck API call
     const abortController = new AbortController();
+    const deckId = deck.id;
 
     //Confirm window to make sure user wants to delete deck
     const confirm = window.confirm(
@@ -18,8 +19,8 @@ export default function DeckView({ decks }) {
 
     //If "ok" is clicked, delete hte deck and refresh the home screen
     if (confirm) {
-      deleteDeck(deck.id, abortController.signal);
-      history.push("/");
+      deleteDeck(deckId, abortController.signal);
+      window.location.reload();
 
       return () => abortController.abort();
     } else {
@@ -51,7 +52,7 @@ export default function DeckView({ decks }) {
       <button
         type="button"
         className="btn btn-danger"
-        onClick={() => deleteHandler(deck.id)}
+        onClick={() => deleteHandler(deck)}
       >
         Delete
       </button>

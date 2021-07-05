@@ -29,6 +29,7 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
     const submittedCard = cardFunction(deckId, newCard, abortController.signal);
     setNewCard(submittedCard);
     history.push(`/decks/${deckId}/`);
+    window.location.reload();
     //abort controller
     return () => abortController.abort();
   }

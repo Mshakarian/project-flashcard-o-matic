@@ -36,7 +36,8 @@ export default function DeckForm({ deck, deckFunction }) {
     //use function passed from page
     const submittedDeck = deckFunction(newDeck, abortController.signal);
     setNewDeck(submittedDeck);
-    history.push(`/decks/${submittedDeck.id}/`);
+    history.push("/");
+    window.location.reload();
 
     //Abort controller
     return () => abortController.abort();
