@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DeckForm from "./DeckForm";
 import NavBar from "../NavBar/NavBar";
+import { createDeck } from "../utils/api";
 
 //add nav bars and states to each later
 
@@ -19,7 +20,7 @@ export default function CreateDeck() {
     <React.Fragment>
       <NavBar navigation={navigation} />
       <h2>Create A New Deck</h2>
-      <DeckForm deck={deck} />
+      <DeckForm deck={deck} deckFunction={createDeck} />
     </React.Fragment>
   );
 }

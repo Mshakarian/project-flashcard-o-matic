@@ -18,8 +18,8 @@ export default function DeckView({ decks }) {
 
     //If "ok" is clicked, delete hte deck and refresh the home screen
     if (confirm) {
-      deleteDeck(deck.id, abortController.signal());
-      window.location.reload();
+      deleteDeck(deck.id, abortController.signal);
+      history.push("/");
 
       return () => abortController.abort();
     } else {

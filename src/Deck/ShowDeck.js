@@ -5,36 +5,35 @@ import NavBar from "../NavBar/NavBar";
 // this function will take in deck and url for buttons, display name and description of deck, buttons for edit, study, add cards, delete
 
 export default function ShowDeck({ deck, url, history }) {
-  //deconstruct deck
-  const { name, description, id } = deck;
+  //delete handler
+  async function deleteHandler(deck) {
+    //abort controller for deleteCard API call
+    const abortController = new AbortController();
+
+    //Confirm window
+    const confirm = window.confirm(
+      "Are you sure you want to delete this card?"
+    );
+
+    //if "ok" clicked, delete card and refresh
+    if (confirm) {
+      deleteDeck(deck.id, abortController.signal);
+      history.push("/");
+
+      return () => abortController.abort();
+    } else {
+      history.push("/");
+    }
+  }
 
   //nav object
-  const navigation = { Home: "/", [name]: " " };
+  const navigation = { Home: "/", [deck.name]: " " };
 
-  //delete handler
-  // async function deleteHandler(id) {
-  //   //Abort controller for deleteDeck API call
-  //   const abortController = new AbortController();
-
-  //   //confirm window
-  //   const confirm = window.confirm(
-  //     "Are you sure you want to delete this deck?"
-  //   );
-
-  //   //if "ok" clicked, delete the deck and refresh the home screen
-  //   if (confirm) {
-  //     deleteDeck(id, abortController.signal);
-  //     history.push("/");
-  //     return () => abortController.abort();
-  //   } else {
-  //     history.push({ url });
-  //   }
-  // }
   return (
     <React.Fragment>
       <NavBar navigation={navigation} />
-      <h3>{name}</h3>
-      <p>{description}</p>
+      <h3>{deck.name}</h3>
+      <p>{deck.description}</p>
       <button
         className="btn btn-secondary"
         onClick={() => history.push(`${url}edit`)}
@@ -53,26 +52,7 @@ export default function ShowDeck({ deck, url, history }) {
       >
         Add Cards
       </button>
-      <button
-        className="btn btn-danger"
-        onClick={() => {
-          const abortController = new AbortController();
-
-          //confirm window
-          const confirm = window.confirm(
-            "Are you sure you want to delete this deck?"
-          );
-
-          //if "ok" clicked, delete the deck and refresh the home screen
-          if (confirm) {
-            deleteDeck(id, abortController.signal);
-            history.push("/");
-            return () => abortController.abort();
-          } else {
-            history.push({ url });
-          }
-        }}
-      >
+      <button className="btn btn-danger" onClick={() => deleteHandler(deck)}>
         Delete
       </button>
     </React.Fragment>

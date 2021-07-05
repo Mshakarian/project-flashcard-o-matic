@@ -7,12 +7,12 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
   //Get history for use later
   const history = useHistory();
   const initialCard = card;
- const [newCard, setNewCard] = useState(initialCard);
+  const [newCard, setNewCard] = useState(initialCard);
   //Set card state
   useEffect(() => {
     const abortController = new AbortController();
     setNewCard(initialCard);
-    return abortController.abort()
+    return abortController.abort();
   }, [initialCard]);
   //change handler
   const changeHandler = ({ target }) => {
@@ -26,11 +26,7 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
     const abortController = new AbortController();
 
     //use function passed from page
-    const submittedCard = cardFunction(
-      deckId,
-      newCard,
-      abortController.signal
-    );
+    const submittedCard = cardFunction(deckId, newCard, abortController.signal);
     setNewCard(submittedCard);
     history.push(`/decks/${deckId}/`);
     //abort controller
@@ -39,7 +35,7 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
   console.log(newCard);
   return (
     <React.Fragment>
-      <form onSubmit={() => submitHandler(newCard, deckId)}>
+      <form onSubmit={(event) => submitHandler(event, newCard, deckId)}>
         <label htmlFor="front">Front:</label>
         <br />
         <textarea

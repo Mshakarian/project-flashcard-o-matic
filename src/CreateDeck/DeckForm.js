@@ -14,12 +14,12 @@ export default function DeckForm({ deck, deckFunction }) {
   };
 
   //set new blank deck state
-  const initialDeck = deck
+  const initialDeck = deck;
   const [newDeck, setNewDeck] = useState(initialDeck);
   useEffect(() => {
     const abortController = new AbortController();
     setNewDeck(initialDeck);
-    return abortController.abort()
+    return abortController.abort();
   }, [initialDeck]);
 
   //change handler
@@ -30,14 +30,13 @@ export default function DeckForm({ deck, deckFunction }) {
   //submit handler
   const submitHandler = (event, newDeck) => {
     event.preventDefault();
-
     //abort controller for deckFunction API call
     const abortController = new AbortController();
 
     //use function passed from page
     const submittedDeck = deckFunction(newDeck, abortController.signal);
     setNewDeck(submittedDeck);
-    history.push(`/decks/${newDeck.id}/`);
+    history.push(`/decks/${submittedDeck.id}/`);
 
     //Abort controller
     return () => abortController.abort();
@@ -45,7 +44,7 @@ export default function DeckForm({ deck, deckFunction }) {
 
   return (
     <React.Fragment>
-      <form>
+      <form onSubmit={(event) => submitHandler(event, newDeck)}>
         <label htmlFor="name">Name:</label>
         <br />
         <input
@@ -73,7 +72,6 @@ export default function DeckForm({ deck, deckFunction }) {
           type="submit"
           style={formButtonStyle}
           className="d-block btn btn-success"
-          onSubmit={submitHandler}
         >
           Submit
         </button>
