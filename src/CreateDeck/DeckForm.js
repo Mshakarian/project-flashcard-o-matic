@@ -53,7 +53,6 @@ export default function DeckForm({ deck, deckFunction }) {
           name="name"
           type="text"
           onChange={changeHandler}
-          value={newDeck.name}
           placeholder={newDeck.name}
         />
         <br />
@@ -63,7 +62,6 @@ export default function DeckForm({ deck, deckFunction }) {
           id="description"
           name="description"
           onChange={changeHandler}
-          value={newDeck.description}
           placeholder={newDeck.description}
           rows={8}
           cols={45}

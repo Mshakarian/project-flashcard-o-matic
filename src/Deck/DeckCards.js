@@ -38,21 +38,24 @@ export default function ShowCards({ deck, url, history }) {
   };
 
   const deckCards = deck.cards.map((card, index) => (
-    <tbody>
-      <tr key={index}>
+    <tbody key={index}>
+      <tr>
         <td style={tdStyle}>{card.front}</td>
         <td style={tdStyle}>{card.back}</td>
-        <button
-          className="btn btn-secondary"
-          onClick={() => history.push(`${url}cards/${card.id}/edit`)}
-        >
-          Edit
-        </button>
-        <br />
-        <button className="btn btn-danger" onClick={() => deleteHandler(card)}>
-          Delete
-        </button>
-        <br />
+        <td style={tdStyle}>
+          <button
+            className="btn btn-secondary"
+            onClick={() => history.push(`${url}cards/${card.id}/edit`)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-danger"
+            onClick={() => deleteHandler(card)}
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   ));

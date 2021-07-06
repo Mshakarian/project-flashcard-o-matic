@@ -19,6 +19,7 @@ export default function ShowDeck({ deck, url, history }) {
     if (confirm) {
       deleteDeck(deck.id, abortController.signal);
       history.push("/");
+      window.location.reload();
 
       return () => abortController.abort();
     } else {

@@ -42,7 +42,6 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
         <textarea
           id="front"
           name="front"
-          value={newCard.front}
           placeholder={card.front}
           onChange={changeHandler}
           required
@@ -55,7 +54,6 @@ export default function NewCardForm({ deckId, card, cardFunction }) {
         <textarea
           id="back"
           name="back"
-          value={newCard.back}
           placeholder={card.back}
           onChange={changeHandler}
           required

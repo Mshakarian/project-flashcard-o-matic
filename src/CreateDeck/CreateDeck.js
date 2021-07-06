@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DeckForm from "./DeckForm";
 import NavBar from "../NavBar/NavBar";
 import { createDeck } from "../utils/api";
@@ -11,16 +11,16 @@ export default function CreateDeck() {
   const navigation = { Home: "/", "Create Deck": " " };
 
   //set deck state to be passed
-  const [deck, setDeck] = useState({
+  const initialDeck = {
     name: "Enter a name",
     description: "Enter a description",
-  });
+  };
 
   return (
     <React.Fragment>
       <NavBar navigation={navigation} />
       <h2>Create A New Deck</h2>
-      <DeckForm deck={deck} deckFunction={createDeck} />
+      <DeckForm deck={initialDeck} deckFunction={createDeck} />
     </React.Fragment>
   );
 }
